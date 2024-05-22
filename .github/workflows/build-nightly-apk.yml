@@ -30,17 +30,6 @@ jobs:
             pycryptodome
             mysql-connector-python
             requests
-      - name: Bump nightly version
-        id: nightly
-        run: python $GITHUB_WORKSPACE/.github/utils/bump_nightly.py $GITHUB_WORKSPACE
-      - name: Write signing passwords
-        if: steps.nightly.outputs.hasNewChanges
-        env:
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASS: ${{ secrets.DB_PASS }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-        run: python $GITHUB_WORKSPACE/.github/utils/sign.py $GITHUB_WORKSPACE commit
   build:
     name: Build APK
     runs-on: self-hosted
